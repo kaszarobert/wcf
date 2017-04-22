@@ -8,6 +8,8 @@ using System.Text;
 
 public class SentenceService : ISentenceService
 {
+    // http://localhost:61729/SentenceService.svc
+
     public int GetWordCount(string sentence)
     {
         return sentence.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Length;

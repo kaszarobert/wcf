@@ -4,13 +4,15 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="sentence" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Key" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="IV" nillable="true" type="xs:base64Binary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetWordCountResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="GetWordCountResult" type="xs:int" />
+        <xs:element minOccurs="0" name="GetWordCountResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -18,13 +20,15 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="sentence" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Key" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="IV" nillable="true" type="xs:base64Binary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="IsPalindromResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="IsPalindromResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="IsPalindromResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -32,6 +36,8 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="sentence" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Key" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="IV" nillable="true" type="xs:base64Binary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -46,6 +52,8 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="sentence" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Key" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="IV" nillable="true" type="xs:base64Binary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

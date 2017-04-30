@@ -5,17 +5,20 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using System.Security.Cryptography;
+using System.IO;
 
 public class SentenceService : ISentenceService
 {
     // http://localhost:61729/SentenceService.svc
 
-    public int GetWordCount(string sentence)
+    public string GetWordCount(string sentence, byte[] Key, byte[] IV)
     {
-        return sentence.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Length;
+        int result = sentence.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Length;
+        return EncryptString_Aes(result.ToString(), Key, IV);
     }
 
-    public bool IsPalindrom(string sentence)
+    public string IsPalindrom(string sentence, byte[] Key, byte[] IV)
     {
         string srcSentence = sentence.Trim().ToUpper().Replace(" ", "");
         string palindromSentence = "";
@@ -25,10 +28,11 @@ public class SentenceService : ISentenceService
             palindromSentence = srcSentence[i] + palindromSentence;
         }
 
-        return String.Compare(srcSentence, palindromSentence) == 0;
+        string result = (String.Compare(srcSentence, palindromSentence) == 0) ? "Igen" : "Nem";
+        return EncryptString_Aes(result, Key, IV);
     }
 
-    public string DecodeCaesarCipher(string sentence)
+    public string DecodeCaesarCipher(string sentence, byte[] Key, byte[] IV)
     {
         var sb = new StringBuilder();
         foreach (char item in sentence)
@@ -52,10 +56,10 @@ public class SentenceService : ISentenceService
             }
 
         }
-        return sb.ToString();
+        return EncryptString_Aes(sb.ToString(), Key, IV);
     }
 
-    public string EncodeCaesarCipher(string sentence)
+    public string EncodeCaesarCipher(string sentence, byte[] Key, byte[] IV)
     {
         var sb = new StringBuilder();
         foreach (char item in sentence)
@@ -79,6 +83,46 @@ public class SentenceService : ISentenceService
             }
 
         }
-        return sb.ToString();
+        return EncryptString_Aes(sb.ToString(), Key, IV);
+    }
+
+    private static string EncryptString_Aes(string plainText, byte[] Key, byte[] IV)
+    {
+        // Check arguments.
+        if (plainText == null || plainText.Length <= 0)
+            throw new ArgumentNullException("plainText");
+        if (Key == null || Key.Length <= 0)
+            throw new ArgumentNullException("Key");
+        if (IV == null || IV.Length <= 0)
+            throw new ArgumentNullException("IV");
+        byte[] encrypted;
+        // Create an AesManaged object
+        // with the specified key and IV.
+        using (AesManaged aesAlg = new AesManaged())
+        {
+            aesAlg.Key = Key;
+            aesAlg.IV = IV;
+
+            // Create a decrytor to perform the stream transform.
+            ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+
+            // Create the streams used for encryption.
+            using (MemoryStream msEncrypt = new MemoryStream())
+            {
+                using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                {
+                    using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                    {
+                        //Write all data to the stream.
+                        swEncrypt.Write(plainText);
+                    }
+                    encrypted = msEncrypt.ToArray();
+                }
+            }
+        }
+
+        // Return the encrypted bytes from the memory stream.
+        return Encoding.Default.GetString(encrypted);
+
     }
 }

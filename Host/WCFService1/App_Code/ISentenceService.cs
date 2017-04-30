@@ -12,15 +12,15 @@ using System.Text;
 public interface ISentenceService
 {
     [OperationContract]
-    int GetWordCount(string sentence);
+    string GetWordCount(string sentence, byte[] Key, byte[] IV);
 
     [OperationContract]
-	bool IsPalindrom(string sentence);
+    string IsPalindrom(string sentence, byte[] Key, byte[] IV);
 
     [OperationContract]
-    string EncodeCaesarCipher(string sentence);
+    string EncodeCaesarCipher(string sentence, byte[] Key, byte[] IV);
 
     [OperationContract]
-    string DecodeCaesarCipher(string sentence);
+    string DecodeCaesarCipher(string sentence, byte[] Key, byte[] IV);
 
 }

@@ -16,28 +16,28 @@ namespace WCFClient1.ServiceReference1 {
     public interface ISentenceService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISentenceService/GetWordCount", ReplyAction="http://tempuri.org/ISentenceService/GetWordCountResponse")]
-        int GetWordCount(string sentence);
+        string GetWordCount(string sentence, byte[] Key, byte[] IV);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISentenceService/GetWordCount", ReplyAction="http://tempuri.org/ISentenceService/GetWordCountResponse")]
-        System.Threading.Tasks.Task<int> GetWordCountAsync(string sentence);
+        System.Threading.Tasks.Task<string> GetWordCountAsync(string sentence, byte[] Key, byte[] IV);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISentenceService/IsPalindrom", ReplyAction="http://tempuri.org/ISentenceService/IsPalindromResponse")]
-        bool IsPalindrom(string sentence);
+        string IsPalindrom(string sentence, byte[] Key, byte[] IV);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISentenceService/IsPalindrom", ReplyAction="http://tempuri.org/ISentenceService/IsPalindromResponse")]
-        System.Threading.Tasks.Task<bool> IsPalindromAsync(string sentence);
+        System.Threading.Tasks.Task<string> IsPalindromAsync(string sentence, byte[] Key, byte[] IV);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISentenceService/EncodeCaesarCipher", ReplyAction="http://tempuri.org/ISentenceService/EncodeCaesarCipherResponse")]
-        string EncodeCaesarCipher(string sentence);
+        string EncodeCaesarCipher(string sentence, byte[] Key, byte[] IV);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISentenceService/EncodeCaesarCipher", ReplyAction="http://tempuri.org/ISentenceService/EncodeCaesarCipherResponse")]
-        System.Threading.Tasks.Task<string> EncodeCaesarCipherAsync(string sentence);
+        System.Threading.Tasks.Task<string> EncodeCaesarCipherAsync(string sentence, byte[] Key, byte[] IV);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISentenceService/DecodeCaesarCipher", ReplyAction="http://tempuri.org/ISentenceService/DecodeCaesarCipherResponse")]
-        string DecodeCaesarCipher(string sentence);
+        string DecodeCaesarCipher(string sentence, byte[] Key, byte[] IV);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISentenceService/DecodeCaesarCipher", ReplyAction="http://tempuri.org/ISentenceService/DecodeCaesarCipherResponse")]
-        System.Threading.Tasks.Task<string> DecodeCaesarCipherAsync(string sentence);
+        System.Threading.Tasks.Task<string> DecodeCaesarCipherAsync(string sentence, byte[] Key, byte[] IV);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -67,36 +67,36 @@ namespace WCFClient1.ServiceReference1 {
                 base(binding, remoteAddress) {
         }
         
-        public int GetWordCount(string sentence) {
-            return base.Channel.GetWordCount(sentence);
+        public string GetWordCount(string sentence, byte[] Key, byte[] IV) {
+            return base.Channel.GetWordCount(sentence, Key, IV);
         }
         
-        public System.Threading.Tasks.Task<int> GetWordCountAsync(string sentence) {
-            return base.Channel.GetWordCountAsync(sentence);
+        public System.Threading.Tasks.Task<string> GetWordCountAsync(string sentence, byte[] Key, byte[] IV) {
+            return base.Channel.GetWordCountAsync(sentence, Key, IV);
         }
         
-        public bool IsPalindrom(string sentence) {
-            return base.Channel.IsPalindrom(sentence);
+        public string IsPalindrom(string sentence, byte[] Key, byte[] IV) {
+            return base.Channel.IsPalindrom(sentence, Key, IV);
         }
         
-        public System.Threading.Tasks.Task<bool> IsPalindromAsync(string sentence) {
-            return base.Channel.IsPalindromAsync(sentence);
+        public System.Threading.Tasks.Task<string> IsPalindromAsync(string sentence, byte[] Key, byte[] IV) {
+            return base.Channel.IsPalindromAsync(sentence, Key, IV);
         }
         
-        public string EncodeCaesarCipher(string sentence) {
-            return base.Channel.EncodeCaesarCipher(sentence);
+        public string EncodeCaesarCipher(string sentence, byte[] Key, byte[] IV) {
+            return base.Channel.EncodeCaesarCipher(sentence, Key, IV);
         }
         
-        public System.Threading.Tasks.Task<string> EncodeCaesarCipherAsync(string sentence) {
-            return base.Channel.EncodeCaesarCipherAsync(sentence);
+        public System.Threading.Tasks.Task<string> EncodeCaesarCipherAsync(string sentence, byte[] Key, byte[] IV) {
+            return base.Channel.EncodeCaesarCipherAsync(sentence, Key, IV);
         }
         
-        public string DecodeCaesarCipher(string sentence) {
-            return base.Channel.DecodeCaesarCipher(sentence);
+        public string DecodeCaesarCipher(string sentence, byte[] Key, byte[] IV) {
+            return base.Channel.DecodeCaesarCipher(sentence, Key, IV);
         }
         
-        public System.Threading.Tasks.Task<string> DecodeCaesarCipherAsync(string sentence) {
-            return base.Channel.DecodeCaesarCipherAsync(sentence);
+        public System.Threading.Tasks.Task<string> DecodeCaesarCipherAsync(string sentence, byte[] Key, byte[] IV) {
+            return base.Channel.DecodeCaesarCipherAsync(sentence, Key, IV);
         }
     }
 }

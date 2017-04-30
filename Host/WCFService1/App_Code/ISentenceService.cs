@@ -18,6 +18,9 @@ public interface ISentenceService
     string IsPalindrom(string sentence, byte[] Key, byte[] IV);
 
     [OperationContract]
+    string getReverseText(string sentence, byte[] Key, byte[] IV);
+
+    [OperationContract]
     string EncodeCaesarCipher(string sentence, byte[] Key, byte[] IV);
 
     [OperationContract]

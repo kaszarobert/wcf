@@ -27,6 +27,12 @@ namespace WCFClient1.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISentenceService/IsPalindrom", ReplyAction="http://tempuri.org/ISentenceService/IsPalindromResponse")]
         System.Threading.Tasks.Task<string> IsPalindromAsync(string sentence, byte[] Key, byte[] IV);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISentenceService/getReverseText", ReplyAction="http://tempuri.org/ISentenceService/getReverseTextResponse")]
+        string getReverseText(string sentence, byte[] Key, byte[] IV);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISentenceService/getReverseText", ReplyAction="http://tempuri.org/ISentenceService/getReverseTextResponse")]
+        System.Threading.Tasks.Task<string> getReverseTextAsync(string sentence, byte[] Key, byte[] IV);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISentenceService/EncodeCaesarCipher", ReplyAction="http://tempuri.org/ISentenceService/EncodeCaesarCipherResponse")]
         string EncodeCaesarCipher(string sentence, byte[] Key, byte[] IV);
         
@@ -81,6 +87,14 @@ namespace WCFClient1.ServiceReference1 {
         
         public System.Threading.Tasks.Task<string> IsPalindromAsync(string sentence, byte[] Key, byte[] IV) {
             return base.Channel.IsPalindromAsync(sentence, Key, IV);
+        }
+        
+        public string getReverseText(string sentence, byte[] Key, byte[] IV) {
+            return base.Channel.getReverseText(sentence, Key, IV);
+        }
+        
+        public System.Threading.Tasks.Task<string> getReverseTextAsync(string sentence, byte[] Key, byte[] IV) {
+            return base.Channel.getReverseTextAsync(sentence, Key, IV);
         }
         
         public string EncodeCaesarCipher(string sentence, byte[] Key, byte[] IV) {

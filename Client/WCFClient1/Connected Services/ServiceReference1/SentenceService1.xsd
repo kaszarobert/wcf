@@ -32,6 +32,22 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="getReverseText">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="sentence" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Key" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="IV" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getReverseTextResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="getReverseTextResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="EncodeCaesarCipher">
     <xs:complexType>
       <xs:sequence>

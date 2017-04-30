@@ -18,6 +18,12 @@
   <wsdl:message name="ISentenceService_IsPalindrom_OutputMessage">
     <wsdl:part name="parameters" element="tns:IsPalindromResponse" />
   </wsdl:message>
+  <wsdl:message name="ISentenceService_getReverseText_InputMessage">
+    <wsdl:part name="parameters" element="tns:getReverseText" />
+  </wsdl:message>
+  <wsdl:message name="ISentenceService_getReverseText_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getReverseTextResponse" />
+  </wsdl:message>
   <wsdl:message name="ISentenceService_EncodeCaesarCipher_InputMessage">
     <wsdl:part name="parameters" element="tns:EncodeCaesarCipher" />
   </wsdl:message>
@@ -38,6 +44,10 @@
     <wsdl:operation name="IsPalindrom">
       <wsdl:input wsaw:Action="http://tempuri.org/ISentenceService/IsPalindrom" message="tns:ISentenceService_IsPalindrom_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISentenceService/IsPalindromResponse" message="tns:ISentenceService_IsPalindrom_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getReverseText">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISentenceService/getReverseText" message="tns:ISentenceService_getReverseText_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISentenceService/getReverseTextResponse" message="tns:ISentenceService_getReverseText_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="EncodeCaesarCipher">
       <wsdl:input wsaw:Action="http://tempuri.org/ISentenceService/EncodeCaesarCipher" message="tns:ISentenceService_EncodeCaesarCipher_InputMessage" />
@@ -61,6 +71,15 @@
     </wsdl:operation>
     <wsdl:operation name="IsPalindrom">
       <soap:operation soapAction="http://tempuri.org/ISentenceService/IsPalindrom" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getReverseText">
+      <soap:operation soapAction="http://tempuri.org/ISentenceService/getReverseText" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

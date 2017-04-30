@@ -18,6 +18,17 @@ public class SentenceService : ISentenceService
         return EncryptString_Aes(result.ToString(), Key, IV);
     }
 
+    public string getReverseText(string sentence, byte[] Key, byte[] IV)
+    {
+        string result = "";
+        for (int i = 0; i < sentence.Length; i++)
+        {
+            result = sentence[i] + result;
+        }
+
+        return EncryptString_Aes(result, Key, IV);
+    }
+
     public string IsPalindrom(string sentence, byte[] Key, byte[] IV)
     {
         string srcSentence = sentence.Trim().ToUpper().Replace(" ", "");

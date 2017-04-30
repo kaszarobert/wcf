@@ -126,5 +126,17 @@ namespace WCFClient1
             return plaintext;
         }
 
+        private void btReverseText_Click(object sender, EventArgs e)
+        {
+            using (AesManaged myAes = new AesManaged())
+            {
+                sc = new ServiceReference1.SentenceServiceClient();
+
+                string encryptedResult = sc.getReverseText(txtSentence.Text, myAes.Key, myAes.IV);
+                txtOutput.Text = DecryptString_Aes(encryptedResult, myAes.Key, myAes.IV);
+
+                sc.Close();
+            }
+        }
     }
 }

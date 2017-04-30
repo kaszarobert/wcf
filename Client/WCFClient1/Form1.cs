@@ -28,8 +28,21 @@ namespace WCFClient1
             using (AesManaged myAes = new AesManaged())
             {
                 sc = new ServiceReference1.SentenceServiceClient();
-
+                sc.Open();
                 string encryptedResult = sc.GetWordCount(txtSentence.Text, myAes.Key, myAes.IV);
+                txtOutput.Text = DecryptString_Aes(encryptedResult, myAes.Key, myAes.IV);
+
+                sc.Close();
+            }
+        }
+
+        private void btReverseText_Click(object sender, EventArgs e)
+        {
+            using (AesManaged myAes = new AesManaged())
+            {
+                sc = new ServiceReference1.SentenceServiceClient();
+                sc.Open();
+                string encryptedResult = sc.getReverseText(txtSentence.Text, myAes.Key, myAes.IV);
                 txtOutput.Text = DecryptString_Aes(encryptedResult, myAes.Key, myAes.IV);
 
                 sc.Close();
@@ -41,7 +54,7 @@ namespace WCFClient1
             using (AesManaged myAes = new AesManaged())
             {
                 sc = new ServiceReference1.SentenceServiceClient();
-
+                sc.Open();
                 string encryptedResult = sc.IsPalindrom(txtSentence.Text, myAes.Key, myAes.IV);
                 txtOutput.Text = DecryptString_Aes(encryptedResult, myAes.Key, myAes.IV);
 
@@ -54,7 +67,7 @@ namespace WCFClient1
             using (AesManaged myAes = new AesManaged())
             {
                 sc = new ServiceReference1.SentenceServiceClient();
-
+                sc.Open();
                 string encryptedResult = sc.EncodeCaesarCipher(txtSentence.Text, myAes.Key, myAes.IV);
                 txtOutput.Text = DecryptString_Aes(encryptedResult, myAes.Key, myAes.IV);
 
@@ -68,17 +81,12 @@ namespace WCFClient1
             using (AesManaged myAes = new AesManaged())
             {
                 sc = new ServiceReference1.SentenceServiceClient();
-
+                sc.Open();
                 string encryptedResult = sc.DecodeCaesarCipher(txtSentence.Text, myAes.Key, myAes.IV);
                 txtOutput.Text = DecryptString_Aes(encryptedResult, myAes.Key, myAes.IV);
 
                 sc.Close();
             }
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
         }
 
         private static string DecryptString_Aes(string cipherString, byte[] Key, byte[] IV)
@@ -126,17 +134,5 @@ namespace WCFClient1
             return plaintext;
         }
 
-        private void btReverseText_Click(object sender, EventArgs e)
-        {
-            using (AesManaged myAes = new AesManaged())
-            {
-                sc = new ServiceReference1.SentenceServiceClient();
-
-                string encryptedResult = sc.getReverseText(txtSentence.Text, myAes.Key, myAes.IV);
-                txtOutput.Text = DecryptString_Aes(encryptedResult, myAes.Key, myAes.IV);
-
-                sc.Close();
-            }
-        }
     }
 }

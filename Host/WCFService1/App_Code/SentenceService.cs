@@ -14,23 +14,29 @@ public class SentenceService : ISentenceService
 
     public string GetWordCount(string sentence, byte[] Key, byte[] IV)
     {
-        int result = sentence.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Length;
+        string decryptedSentence = DecryptString_Aes(sentence, Key, IV);
+
+        int result = decryptedSentence.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Length;
         return EncryptString_Aes(result.ToString(), Key, IV);
     }
 
     public string getReverseText(string sentence, byte[] Key, byte[] IV)
     {
-        string result = getReverseString(sentence);
+        string decryptedSentence = DecryptString_Aes(sentence, Key, IV);
+
+        string result = getReverseString(decryptedSentence);
         return EncryptString_Aes(result, Key, IV);
     }
 
     public string IsPalindrom(string sentence, byte[] Key, byte[] IV)
     {
-        if (sentence.Length == 0)
+        string decryptedSentence = DecryptString_Aes(sentence, Key, IV);
+
+        if (decryptedSentence.Length == 0)
         {
             return "";
         }
-        string srcSentence = sentence.Trim().ToUpper().Replace(" ", "");
+        string srcSentence = decryptedSentence.Trim().ToUpper().Replace(" ", "");
         string palindromSentence = getReverseString(srcSentence);
         string result = (String.Compare(srcSentence, palindromSentence) == 0) ? "Igen" : "Nem";
         return EncryptString_Aes(result, Key, IV);
@@ -38,8 +44,10 @@ public class SentenceService : ISentenceService
 
     public string DecodeCaesarCipher(string sentence, byte[] Key, byte[] IV)
     {
+        string decryptedSentence = DecryptString_Aes(sentence, Key, IV);
+
         var sb = new StringBuilder();
-        foreach (char item in sentence)
+        foreach (char item in decryptedSentence)
         {
             if (item >= 'a' && item <= 'z')
             {
@@ -65,8 +73,10 @@ public class SentenceService : ISentenceService
 
     public string EncodeCaesarCipher(string sentence, byte[] Key, byte[] IV)
     {
+        string decryptedSentence = DecryptString_Aes(sentence, Key, IV);
+
         var sb = new StringBuilder();
-        foreach (char item in sentence)
+        foreach (char item in decryptedSentence)
         {
             if (item >= 'a' && item <= 'z')
             {
@@ -133,5 +143,50 @@ public class SentenceService : ISentenceService
         // Return the encrypted bytes from the memory stream.
         return Encoding.Default.GetString(encrypted);
 
+    }
+
+    private static string DecryptString_Aes(string cipherString, byte[] Key, byte[] IV)
+    {
+        byte[] cipherText = Encoding.Default.GetBytes(cipherString);
+
+        // Check arguments.
+        if (cipherText == null || cipherText.Length <= 0)
+            return "";
+        if (Key == null || Key.Length <= 0)
+            throw new ArgumentNullException("Key");
+        if (IV == null || IV.Length <= 0)
+            throw new ArgumentNullException("IV");
+
+        // Declare the string used to hold
+        // the decrypted text.
+        string plaintext = null;
+
+        // Create an AesManaged object
+        // with the specified key and IV.
+        using (AesManaged aesAlg = new AesManaged())
+        {
+            aesAlg.Key = Key;
+            aesAlg.IV = IV;
+
+            // Create a decrytor to perform the stream transform.
+            ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+
+            // Create the streams used for decryption.
+            using (MemoryStream msDecrypt = new MemoryStream(cipherText))
+            {
+                using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                {
+                    using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                    {
+                        // Read the decrypted bytes from the decrypting stream
+                        // and place them in a string.
+                        plaintext = srDecrypt.ReadToEnd();
+                    }
+                }
+            }
+
+        }
+
+        return plaintext;
     }
 }

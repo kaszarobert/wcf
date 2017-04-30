@@ -32,30 +32,35 @@ namespace WCFClient1
                     sc = new ServiceReference1.SentenceServiceClient();
                     sc.Open();
                     string encryptedResult = "";
+                    string encryptedText = "";
 
                     if (sender.Equals(btWordCount))
                     {
-                        encryptedResult = sc.GetWordCount(txtSentence.Text, myAes.Key, myAes.IV);
+                        encryptedText = EncryptString_Aes(txtSentence.Text, myAes.Key, myAes.IV);
+                        encryptedResult = sc.GetWordCount(encryptedText, myAes.Key, myAes.IV);
                     }
                     else if (sender.Equals(btReverseText))
                     {
-                        encryptedResult = sc.getReverseText(txtSentence.Text, myAes.Key, myAes.IV);
+                        encryptedText = EncryptString_Aes(txtSentence.Text, myAes.Key, myAes.IV);
+                        encryptedResult = sc.getReverseText(encryptedText, myAes.Key, myAes.IV);
                     }
                     else if (sender.Equals(btIsPalindrom))
                     {
-                        encryptedResult = sc.IsPalindrom(txtSentence.Text, myAes.Key, myAes.IV);
+                        encryptedText = EncryptString_Aes(txtSentence.Text, myAes.Key, myAes.IV);
+                        encryptedResult = sc.IsPalindrom(encryptedText, myAes.Key, myAes.IV);
                     }
                     else if (sender.Equals(btCaesarEncode))
                     {
-                        encryptedResult = sc.EncodeCaesarCipher(txtSentence.Text, myAes.Key, myAes.IV);
+                        encryptedText = EncryptString_Aes(txtSentence.Text, myAes.Key, myAes.IV);
+                        encryptedResult = sc.EncodeCaesarCipher(encryptedText, myAes.Key, myAes.IV);
                     }
                     else if (sender.Equals(btCaesarDecode))
                     {
-                        encryptedResult = sc.DecodeCaesarCipher(txtSentence.Text, myAes.Key, myAes.IV);
+                        encryptedText = EncryptString_Aes(txtSentence.Text, myAes.Key, myAes.IV);
+                        encryptedResult = sc.DecodeCaesarCipher(encryptedText, myAes.Key, myAes.IV);
                     }
 
                     txtOutput.Text = DecryptString_Aes(encryptedResult, myAes.Key, myAes.IV);
-                    sc.Close();
                 }
             }
             catch (Exception exc)
@@ -67,6 +72,46 @@ namespace WCFClient1
                 sc.Close();
             }
             
+        }
+
+        private static string EncryptString_Aes(string plainText, byte[] Key, byte[] IV)
+        {
+            // Check arguments.
+            if (plainText == null || plainText.Length <= 0)
+                return "";
+            if (Key == null || Key.Length <= 0)
+                throw new ArgumentNullException("Key");
+            if (IV == null || IV.Length <= 0)
+                throw new ArgumentNullException("IV");
+            byte[] encrypted;
+            // Create an AesManaged object
+            // with the specified key and IV.
+            using (AesManaged aesAlg = new AesManaged())
+            {
+                aesAlg.Key = Key;
+                aesAlg.IV = IV;
+
+                // Create a decrytor to perform the stream transform.
+                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+
+                // Create the streams used for encryption.
+                using (MemoryStream msEncrypt = new MemoryStream())
+                {
+                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                        {
+                            //Write all data to the stream.
+                            swEncrypt.Write(plainText);
+                        }
+                        encrypted = msEncrypt.ToArray();
+                    }
+                }
+            }
+
+            // Return the encrypted bytes from the memory stream.
+            return Encoding.Default.GetString(encrypted);
+
         }
 
         private static string DecryptString_Aes(string cipherString, byte[] Key, byte[] IV)

@@ -20,25 +20,18 @@ public class SentenceService : ISentenceService
 
     public string getReverseText(string sentence, byte[] Key, byte[] IV)
     {
-        string result = "";
-        for (int i = 0; i < sentence.Length; i++)
-        {
-            result = sentence[i] + result;
-        }
-
+        string result = getReverseString(sentence);
         return EncryptString_Aes(result, Key, IV);
     }
 
     public string IsPalindrom(string sentence, byte[] Key, byte[] IV)
     {
-        string srcSentence = sentence.Trim().ToUpper().Replace(" ", "");
-        string palindromSentence = "";
-
-        for (int i = 0; i < srcSentence.Length; i++)
+        if (sentence.Length == 0)
         {
-            palindromSentence = srcSentence[i] + palindromSentence;
+            return "";
         }
-
+        string srcSentence = sentence.Trim().ToUpper().Replace(" ", "");
+        string palindromSentence = getReverseString(srcSentence);
         string result = (String.Compare(srcSentence, palindromSentence) == 0) ? "Igen" : "Nem";
         return EncryptString_Aes(result, Key, IV);
     }
@@ -97,11 +90,16 @@ public class SentenceService : ISentenceService
         return EncryptString_Aes(sb.ToString(), Key, IV);
     }
 
+    private string getReverseString(string s)
+    {
+        return new string(s.Reverse().ToArray());
+    }
+    
     private static string EncryptString_Aes(string plainText, byte[] Key, byte[] IV)
     {
         // Check arguments.
         if (plainText == null || plainText.Length <= 0)
-            throw new ArgumentNullException("plainText");
+            return "";
         if (Key == null || Key.Length <= 0)
             throw new ArgumentNullException("Key");
         if (IV == null || IV.Length <= 0)

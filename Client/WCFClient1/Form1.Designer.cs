@@ -35,7 +35,7 @@
             this.txtOutput = new System.Windows.Forms.TextBox();
             this.btCaesarDecode = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btIsPalindrom = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btWordCount
@@ -46,7 +46,7 @@
             this.btWordCount.TabIndex = 0;
             this.btWordCount.Text = "Szavak száma";
             this.btWordCount.UseVisualStyleBackColor = true;
-            this.btWordCount.Click += new System.EventHandler(this.btWordCount_Click);
+            this.btWordCount.Click += new System.EventHandler(this.btAll_Click);
             // 
             // btReverseText
             // 
@@ -56,7 +56,7 @@
             this.btReverseText.TabIndex = 1;
             this.btReverseText.Text = "Szöveg megfordítása";
             this.btReverseText.UseVisualStyleBackColor = true;
-            this.btReverseText.Click += new System.EventHandler(this.btReverseText_Click);
+            this.btReverseText.Click += new System.EventHandler(this.btAll_Click);
             // 
             // btCaesarEncode
             // 
@@ -66,7 +66,7 @@
             this.btCaesarEncode.TabIndex = 2;
             this.btCaesarEncode.Text = "Caesar-kód";
             this.btCaesarEncode.UseVisualStyleBackColor = true;
-            this.btCaesarEncode.Click += new System.EventHandler(this.btCaesarEncode_Click);
+            this.btCaesarEncode.Click += new System.EventHandler(this.btAll_Click);
             // 
             // txtSentence
             // 
@@ -90,7 +90,7 @@
             this.btCaesarDecode.TabIndex = 5;
             this.btCaesarDecode.Text = "Caesar-kód visszafejtése";
             this.btCaesarDecode.UseVisualStyleBackColor = true;
-            this.btCaesarDecode.Click += new System.EventHandler(this.btCaesarDecode_Click);
+            this.btCaesarDecode.Click += new System.EventHandler(this.btAll_Click);
             // 
             // label1
             // 
@@ -101,22 +101,22 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Adja meg a szöveget:";
             // 
-            // button1
+            // btIsPalindrom
             // 
-            this.button1.Location = new System.Drawing.Point(212, 73);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 46);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Palindrom?";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.btIsPalindrom_Click);
+            this.btIsPalindrom.Location = new System.Drawing.Point(212, 73);
+            this.btIsPalindrom.Name = "btIsPalindrom";
+            this.btIsPalindrom.Size = new System.Drawing.Size(75, 46);
+            this.btIsPalindrom.TabIndex = 7;
+            this.btIsPalindrom.Text = "Palindrom?";
+            this.btIsPalindrom.UseVisualStyleBackColor = true;
+            this.btIsPalindrom.Click += new System.EventHandler(this.btAll_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(485, 196);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btIsPalindrom);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btCaesarDecode);
             this.Controls.Add(this.txtOutput);
@@ -142,7 +142,7 @@
         private System.Windows.Forms.TextBox txtOutput;
         private System.Windows.Forms.Button btCaesarDecode;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btIsPalindrom;
     }
 }
 

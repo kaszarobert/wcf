@@ -23,70 +23,50 @@ namespace WCFClient1
             InitializeComponent();
         }
 
-        private void btWordCount_Click(object sender, EventArgs e)
+        private void btAll_Click(object sender, EventArgs e)
         {
-            using (AesManaged myAes = new AesManaged())
+            try
             {
-                sc = new ServiceReference1.SentenceServiceClient();
-                sc.Open();
-                string encryptedResult = sc.GetWordCount(txtSentence.Text, myAes.Key, myAes.IV);
-                txtOutput.Text = DecryptString_Aes(encryptedResult, myAes.Key, myAes.IV);
+                using (AesManaged myAes = new AesManaged())
+                {
+                    sc = new ServiceReference1.SentenceServiceClient();
+                    sc.Open();
+                    string encryptedResult = "";
 
+                    if (sender.Equals(btWordCount))
+                    {
+                        encryptedResult = sc.GetWordCount(txtSentence.Text, myAes.Key, myAes.IV);
+                    }
+                    else if (sender.Equals(btReverseText))
+                    {
+                        encryptedResult = sc.getReverseText(txtSentence.Text, myAes.Key, myAes.IV);
+                    }
+                    else if (sender.Equals(btIsPalindrom))
+                    {
+                        encryptedResult = sc.IsPalindrom(txtSentence.Text, myAes.Key, myAes.IV);
+                    }
+                    else if (sender.Equals(btCaesarEncode))
+                    {
+                        encryptedResult = sc.EncodeCaesarCipher(txtSentence.Text, myAes.Key, myAes.IV);
+                    }
+                    else if (sender.Equals(btCaesarDecode))
+                    {
+                        encryptedResult = sc.DecodeCaesarCipher(txtSentence.Text, myAes.Key, myAes.IV);
+                    }
+
+                    txtOutput.Text = DecryptString_Aes(encryptedResult, myAes.Key, myAes.IV);
+                    sc.Close();
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+            finally
+            {
                 sc.Close();
             }
-        }
-
-        private void btReverseText_Click(object sender, EventArgs e)
-        {
-            using (AesManaged myAes = new AesManaged())
-            {
-                sc = new ServiceReference1.SentenceServiceClient();
-                sc.Open();
-                string encryptedResult = sc.getReverseText(txtSentence.Text, myAes.Key, myAes.IV);
-                txtOutput.Text = DecryptString_Aes(encryptedResult, myAes.Key, myAes.IV);
-
-                sc.Close();
-            }
-        }
-
-        private void btIsPalindrom_Click(object sender, EventArgs e)
-        {
-            using (AesManaged myAes = new AesManaged())
-            {
-                sc = new ServiceReference1.SentenceServiceClient();
-                sc.Open();
-                string encryptedResult = sc.IsPalindrom(txtSentence.Text, myAes.Key, myAes.IV);
-                txtOutput.Text = DecryptString_Aes(encryptedResult, myAes.Key, myAes.IV);
-
-                sc.Close();
-            }
-        }
-
-        private void btCaesarEncode_Click(object sender, EventArgs e)
-        {
-            using (AesManaged myAes = new AesManaged())
-            {
-                sc = new ServiceReference1.SentenceServiceClient();
-                sc.Open();
-                string encryptedResult = sc.EncodeCaesarCipher(txtSentence.Text, myAes.Key, myAes.IV);
-                txtOutput.Text = DecryptString_Aes(encryptedResult, myAes.Key, myAes.IV);
-
-                sc.Close();
-            }
-                
-        }
-
-        private void btCaesarDecode_Click(object sender, EventArgs e)
-        {
-            using (AesManaged myAes = new AesManaged())
-            {
-                sc = new ServiceReference1.SentenceServiceClient();
-                sc.Open();
-                string encryptedResult = sc.DecodeCaesarCipher(txtSentence.Text, myAes.Key, myAes.IV);
-                txtOutput.Text = DecryptString_Aes(encryptedResult, myAes.Key, myAes.IV);
-
-                sc.Close();
-            }
+            
         }
 
         private static string DecryptString_Aes(string cipherString, byte[] Key, byte[] IV)
@@ -95,7 +75,7 @@ namespace WCFClient1
 
             // Check arguments.
             if (cipherText == null || cipherText.Length <= 0)
-                throw new ArgumentNullException("cipherText");
+                return "";
             if (Key == null || Key.Length <= 0)
                 throw new ArgumentNullException("Key");
             if (IV == null || IV.Length <= 0)

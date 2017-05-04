@@ -76,6 +76,7 @@ namespace WCFClient1
 
         private static string EncryptString_Aes(string plainText, byte[] Key, byte[] IV)
         {
+            // source: https://msdn.microsoft.com/en-us/library/system.security.cryptography.aesmanaged(v=vs.110).aspx
             // Check arguments.
             if (plainText == null || plainText.Length <= 0)
                 return "";
@@ -118,6 +119,7 @@ namespace WCFClient1
         {
             byte[] cipherText = Encoding.Default.GetBytes(cipherString);
 
+            // source: https://msdn.microsoft.com/en-us/library/system.security.cryptography.aesmanaged(v=vs.110).aspx
             // Check arguments.
             if (cipherText == null || cipherText.Length <= 0)
                 return "";
